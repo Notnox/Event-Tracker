@@ -2,24 +2,12 @@ import { useState } from 'react';
 import style from './App.module.scss';
 import Card from './components/Card';
 import Formulario from './components/Formulario';
-import { IEvento } from './interfaces/IEvento';
 import Calendario from './components/Calendario';
 import ListaDeEventos from './components/ListaDeEventos';
 import { RecoilRoot } from 'recoil';
 
 function App() {
-
-  const [eventos, setEventos] = useState<IEvento[]>()
-
-
   const [filtro, setFiltro] = useState<Date | null>()
-
-  const adicionarEvento = (evento: IEvento) => {
-    evento.id = Math.round((new Date()).getTime() / 1000)
-    //eventos.push(evento)
-    
-   // setEventos([...eventos])
-  }
   
   const aplicarFiltro = (data: Date | null) => {
     setFiltro(data)
