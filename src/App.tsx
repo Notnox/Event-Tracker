@@ -7,18 +7,6 @@ import ListaDeEventos from './components/ListaDeEventos';
 import { RecoilRoot } from 'recoil';
 
 function App() {
-  const [filtro, setFiltro] = useState<Date | null>()
-  
-  const aplicarFiltro = (data: Date | null) => {
-    setFiltro(data)
-  }
-
-  const filtrados = !filtro
-   // ? eventos
-  //  : eventos.filter((evento) =>
-  //    filtro!.toISOString().slice(0, 10) === evento.inicio.toISOString().slice(0, 10)
-   // );
-
   return (
     <RecoilRoot>
       <div className={style.App}>
@@ -28,9 +16,7 @@ function App() {
           </Card>
           <hr />
           <Card>
-            <ListaDeEventos 
-              aoFiltroAplicado={aplicarFiltro} 
-              />
+            <ListaDeEventos />
           </Card>
         </div>
         <div className={style.Coluna}>

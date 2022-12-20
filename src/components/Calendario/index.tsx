@@ -6,6 +6,9 @@ import Kalend, { CalendarEvent, CalendarView, OnEventDragFinish } from 'kalend'
 import 'kalend/dist/styles/index.css';
 import useAtualizarEvento from '../../state/hooks/useAtualizarEventos';
 import useListaDeEventos from '../../state/hooks/useListaDeEventos';
+import { useRecoilValue } from 'recoil';
+import { IFiltroDeEventos } from '../../interfaces/IFiltroDeEventos';
+import { filtroDeEventos } from '../../state/atom';
 
 interface IKalendEvento {
   id?: number
@@ -16,9 +19,10 @@ interface IKalendEvento {
 }
 
 const Calendario: React.FC = () => {
-  const atualizarEvento = useAtualizarEvento();
-  const eventos = useListaDeEventos();
   const eventosKalend = new Map<string, IKalendEvento[]>();
+  const atualizarEvento = useAtualizarEvento();
+
+  const eventos = useListaDeEventos();
 
   eventos.forEach(evento => {
     const chave = evento.inicio.toISOString().slice(0, 10)
