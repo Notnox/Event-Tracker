@@ -1,14 +1,12 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './Calendario.module.scss';
 import ptBR from './localizacao/ptBR.json'
 import Kalend, { CalendarEvent, CalendarView, OnEventDragFinish } from 'kalend'
 import 'kalend/dist/styles/index.css';
 import useAtualizarEvento from '../../state/hooks/useAtualizarEventos';
 import useListaDeEventos from '../../state/hooks/useListaDeEventos';
-import { useRecoilValue } from 'recoil';
-import { IFiltroDeEventos } from '../../interfaces/IFiltroDeEventos';
-import { filtroDeEventos } from '../../state/atom';
+import { IEvento } from '../../interfaces/IEvento';
 
 interface IKalendEvento {
   id?: number
@@ -16,6 +14,16 @@ interface IKalendEvento {
   endAt: string
   summary: string
   color: string
+}
+interface ITeste {
+  id: any;
+  startAt: string;
+  endAt: string;
+  timezoneStartAt: string;
+  timezoneEndAt: string;
+  summary: string;
+  color: string;
+  [key: string]: any;
 }
 
 const Calendario: React.FC = () => {
@@ -37,18 +45,29 @@ const Calendario: React.FC = () => {
       color: 'blue'
     })
   })
-  const onEventDragFinish: OnEventDragFinish = (
-    kalendEventoInalterado : CalendarEvent,
-    kalendEventoAtualizado: CalendarEvent,
-  ) => {
-    const evento = eventos.find(evento => evento.descricao === kalendEventoAtualizado.summary);
-    if(evento){
-      const eventoAtualizado = { ...evento }
-      eventoAtualizado.inicio = new Date(kalendEventoAtualizado.startAt);
-      eventoAtualizado.fim = new Date(kalendEventoAtualizado.endAt);
 
-      atualizarEvento(eventoAtualizado);
-    }
+  const [teste, setTeste] = useState<ITeste>({
+    id: 123213,
+  startAt: '2022-12-20',
+  endAt: '2022-12-20',
+  timezoneStartAt: '2022-12-20',
+  timezoneEndAt: '2022-12-20',
+  summary: '2022-12-20',
+  color: 'blue',
+  key: 'key'
+  });
+
+  const onEventDragFinish: OnEventDragFinish = (
+    kalendEventoInalterado: CalendarEvent,
+    KalendEventoAtualizado: CalendarEvent,
+  ) => {
+    const evento = {
+      id: KalendEventoAtualizado.id,
+      descricao: KalendEventoAtualizado.summary,
+      inicio: new Date(KalendEventoAtualizado.startAt),
+      fim: new Date(KalendEventoAtualizado.endAt)
+    } as IEvento
+    atualizarEvento(evento)
   };
 
   return (
